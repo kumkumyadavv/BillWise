@@ -4,41 +4,36 @@ __pycache__/
 *.pyo
 
 # Virtual environment
-.venv/
 venv/
+.venv/
 env/
 
-# Environment variables
+# Environment variables / secrets
 .env
 .env.*
 !.env.example
-
-# FastAPI / Python
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-
-# Node
-node_modules/
-dist/
-.vite/
-
-# Logs
-*.log
-
-# OS
-.DS_Store
-Thumbs.db
 
 # IDE
 .vscode/
 .idea/
 
-# Coverage
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing / coverage
+.pytest_cache/
 .coverage
 htmlcov/
 
-# Local database / temporary files
-*.db
-*.sqlite
-*.sqlite3
+# Build / distribution
+build/
+dist/
+*.egg-info/
+
+# Frontend
+node_modules/
+frontend/dist/
+
+# Logs
+*.log
