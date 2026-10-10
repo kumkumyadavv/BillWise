@@ -3,7 +3,9 @@ app=FastAPI(title="BillWise")
 
 from app.router.auth import router as auth_router
 from app.router.plan import router as plan_router
+from app.router.subscriptions import router as subscription_router
 
+app.include_router(subscription_router)
 app.include_router(auth_router)
 app.include_router(plan_router)
 @app.get("/")

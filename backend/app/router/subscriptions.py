@@ -9,7 +9,7 @@ from app.schemas.subscription import (
     SubscriptionCreate,
     SubscriptionResponse,
 )
-from app.auth.utils import get_user_id_from_token
+#from app.auth.utils import get_user_id_from_token
 from fastapi.security import OAuth2PasswordBearer
 
 router = APIRouter(
