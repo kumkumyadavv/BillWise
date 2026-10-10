@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from backend.app.schemas.auth import UserRegister, UserLogin
+from app.schemas.auth import UserRegister, UserLogin
 from app.auth.utils import (
     hash_password,
     verify_password,
@@ -8,8 +8,6 @@ from app.auth.utils import (
 )
 from app.database import get_db
 from app.models import User
-from backend.app.schemas.auth import UserRegister
-from app.auth.utils import hash_password
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
