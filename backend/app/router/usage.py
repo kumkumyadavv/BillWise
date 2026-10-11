@@ -1,21 +1,23 @@
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from fastapi.security import OAuth2PasswordBearer
+
 
 from app.database import get_db
 from app.models import User, Subscription, UsageEvent
 from app.schemas.usage import UsageEventCreate, UsageEventResponse
 from app.auth.utils import get_user_id_from_token
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
+bearer_scheme = HTTPBearer()
 router = APIRouter(prefix="/usage", tags=["Usage"])
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
+
 
 
 @router.post("/", response_model=UsageEventResponse, status_code=201)
 def record_usage(
     data: UsageEventCreate,
-    token: str = Depends(oauth2_scheme),
+    credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme),
     db: Session = Depends(get_db),
 ):
     try:
@@ -69,11 +71,11 @@ def record_usage(
 
 @router.get("/me", response_model=list[UsageEventResponse])
 def my_usage(
-    token: str = Depends(oauth2_scheme),
+    credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme),
     db: Session = Depends(get_db),
 ):
     try:
-        user_id = get_user_id_from_token(token)
+        user_id = get_user_id_from_token(credentials.credentials)
     except (ValueError, TypeError):
         raise HTTPException(status_code=401, detail="Invalid token")
 

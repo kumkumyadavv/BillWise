@@ -36,3 +36,26 @@ def create_access_token(user_id: int):
     }
 
     return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
+
+
+
+from jose import JWTError, jwt
+
+
+def get_user_id_from_token(token: str) -> int:
+    try:
+        payload = jwt.decode(
+            token,
+            SECRET_KEY,
+            algorithms=[ALGORITHM],
+        )
+
+        user_id = payload.get("sub")
+
+        if user_id is None:
+            raise ValueError("Invalid token")
+
+        return int(user_id)
+
+    except (JWTError, ValueError, TypeError):
+        raise ValueError("Invalid or expired token")
