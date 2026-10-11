@@ -6,7 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy import func
 from sqlalchemy.orm import Session
-
+from app.schemas.invoice import InvoiceResponse,InvoiceItemResponse
 from app.auth.utils import get_user_id_from_token
 from app.database import get_db
 from app.models import (
@@ -178,9 +178,10 @@ def my_invoices(
     )
 
 
+
 @router.get(
     "/{invoice_id}/items",
-    response_model=list,
+    response_model=list[InvoiceItemResponse],
 )
 def get_invoice_items(
     invoice_id: int,
@@ -205,9 +206,10 @@ def get_invoice_items(
     if not invoice:
         raise HTTPException(status_code=404, detail="Invoice not found")
 
-    return (
+    items = (
         db.query(InvoiceItem)
-        .filter(InvoiceItem.invoice_id == invoice.id)
-        .order_by(InvoiceItem.id)
+        .filter(InvoiceItem.invoice_id == invoice_id)
         .all()
     )
+
+    return items

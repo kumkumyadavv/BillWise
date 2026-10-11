@@ -1,7 +1,7 @@
 
 from datetime import datetime, timezone
 from decimal import Decimal
-
+from sqlalchemy import UniqueConstraint
 from sqlalchemy import DateTime, ForeignKey, Numeric, String, Integer
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -10,7 +10,14 @@ from app.database import Base
 
 class Invoice(Base):
     __tablename__ = "invoices"
-
+    __table_args__ = (
+    UniqueConstraint(
+        "subscription_id",
+        "period_start",
+        "period_end",
+        name="uq_invoice_subscription_period",
+    ),
+)
     id: Mapped[int] = mapped_column(primary_key=True)
     subscription_id: Mapped[int] = mapped_column(
         ForeignKey("subscriptions.id"), nullable=False
