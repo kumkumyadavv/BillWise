@@ -16,16 +16,26 @@ class Invoice(Base):
         ForeignKey("subscriptions.id"), nullable=False
     )
     total_amount: Mapped[Decimal] = mapped_column(
-        Numeric(12, 2), nullable=False
+        Numeric(12, 2), nullable=True
     )
     status: Mapped[str] = mapped_column(
-        String(20), default="pending", nullable=False
+        String(20), default="pending", nullable=True
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         default=lambda: datetime.now(timezone.utc),
         nullable=False,
     )
+
+    period_start: Mapped[datetime] = mapped_column(
+    DateTime(timezone=True),
+    nullable=False,
+)
+
+    period_end: Mapped[datetime] = mapped_column(
+    DateTime(timezone=True),
+    nullable=False,
+)
 
 
 class InvoiceItem(Base):
