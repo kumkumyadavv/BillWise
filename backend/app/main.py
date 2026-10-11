@@ -5,7 +5,9 @@ from app.router.auth import router as auth_router
 from app.router.plan import router as plan_router
 from app.router.subscriptions import router as subscription_router
 from app.router.usage import router as usage_router
+from app.router.invoices import router as invoice_router
 
+app.include_router(invoice_router)
 app.include_router(usage_router)
 app.include_router(subscription_router)
 app.include_router(auth_router)
