@@ -11,7 +11,9 @@ from app.schemas.subscription import (
 )
 from app.auth.utils import get_user_id_from_token
 from fastapi.security import OAuth2PasswordBearer
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
+bearer_scheme = HTTPBearer()
 router = APIRouter(
     prefix="/subscriptions",
     tags=["Subscriptions"],
@@ -23,10 +25,10 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 @router.post("/", response_model=SubscriptionResponse, status_code=201)
 def create_subscription(
     data: SubscriptionCreate,
-    token: str = Depends(oauth2_scheme),
+    credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme),
     db: Session = Depends(get_db),
 ):
-    user_id = get_user_id_from_token(token)
+    user_id = get_user_id_from_token(credentials.credentials)
 
     user = db.query(User).filter(User.id == user_id).first()
     if not user:
@@ -65,10 +67,10 @@ def create_subscription(
 
 @router.get("/me", response_model=list[SubscriptionResponse])
 def my_subscriptions(
-    token: str = Depends(oauth2_scheme),
+    credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme),
     db: Session = Depends(get_db),
 ):
-    user_id = get_user_id_from_token(token)
+    user_id = get_user_id_from_token(credentials.credentials)
 
     return (
         db.query(Subscription)

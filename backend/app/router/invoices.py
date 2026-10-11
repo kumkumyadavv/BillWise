@@ -91,3 +91,24 @@ def generate_invoice(
     except Exception:
         db.rollback()
         raise
+
+
+
+
+@router.get("/me", response_model=list[InvoiceResponse])
+def my_invoices(
+    credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme),
+    db: Session = Depends(get_db),
+):
+    try:
+        user_id = get_user_id_from_token(credentials.credentials)
+    except (ValueError, TypeError):
+        raise HTTPException(status_code=401, detail="Invalid token")
+
+    return (
+        db.query(Invoice)
+        .join(Subscription, Invoice.subscription_id == Subscription.id)
+        .filter(Subscription.user_id == user_id)
+        .order_by(Invoice.id.desc())
+        .all()
+    )
