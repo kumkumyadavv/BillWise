@@ -21,7 +21,7 @@ def record_usage(
     db: Session = Depends(get_db),
 ):
     try:
-        user_id = get_user_id_from_token(token)
+        user_id = get_user_id_from_token(credentials.credentials)
     except (ValueError, TypeError):
         raise HTTPException(status_code=401, detail="Invalid token")
 
