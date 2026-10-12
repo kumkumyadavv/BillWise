@@ -1,6 +1,6 @@
 
 from datetime import datetime, timezone
-
+from sqlalchemy.exc import IntegrityError
 from dateutil.relativedelta import relativedelta
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
@@ -154,6 +154,12 @@ def generate_invoice(
         db.refresh(invoice)
         return invoice
 
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(
+            status_code=409,
+            detail="Invoice already exists for this billing period",
+        )
     except Exception:
         db.rollback()
         raise

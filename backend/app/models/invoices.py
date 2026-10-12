@@ -6,8 +6,6 @@ from sqlalchemy import DateTime, ForeignKey, Numeric, String, Integer
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.database import Base
-
-
 class Invoice(Base):
     __tablename__ = "invoices"
     __table_args__ = (
