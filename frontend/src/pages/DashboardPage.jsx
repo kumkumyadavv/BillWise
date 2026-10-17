@@ -134,7 +134,7 @@ export default function DashboardPage() {
                       <span>{usageTotal.toLocaleString()} / {Number(activePlan.included_requests).toLocaleString()}</span>
                     </div>
                     <div className="h-2.5 overflow-hidden rounded-full bg-slate-800">
-                      <div className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-teal-400" style={{ width: `${Math.max(usagePercent, 8)}%` }} />
+                      <div className="h-full rounded-full bg-cyan-500" style={{ width: `${Math.max(usagePercent, 8)}%` }} />
                     </div>
                   </div>
                 </>

@@ -1,9 +1,46 @@
 @import "tailwindcss";
 
+@theme {
+  --color-white: #f0f1f0;
+
+  --color-slate-50: #f7f8f7;
+  --color-slate-100: #f0f1f0;
+  --color-slate-200: #d6d9d7;
+  --color-slate-300: #b8bdbb;
+  --color-slate-400: #929796;
+  --color-slate-500: #737b78;
+  --color-slate-600: #4a5250;
+  --color-slate-700: #343a3a;
+  --color-slate-800: #292d2e;
+  --color-slate-900: #111415;
+  --color-slate-950: #0b0d0e;
+
+  --color-cyan-200: #d8f2b7;
+  --color-cyan-300: #c6ed91;
+  --color-cyan-400: #c4f47e;
+  --color-cyan-500: #b5f36d;
+
+  --color-teal-400: #a7df68;
+
+  --color-emerald-200: #d8f2b7;
+  --color-emerald-300: #c6ed91;
+  --color-emerald-500: #9fcf61;
+
+  --color-amber-200: #ead7ac;
+  --color-amber-500: #a8864e;
+
+  --color-violet-200: #c6d1bb;
+  --color-violet-500: #7e8d74;
+
+  --color-red-200: #f0b5b5;
+  --color-red-500: #d77878;
+}
+
 :root {
   font-family: Inter, 'Segoe UI', sans-serif;
-  color: #e2e8f0;
-  background: #020617;
+  color: #f0f1f0;
+  background: #0b0d0e;
+  color-scheme: dark;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -11,7 +48,7 @@
 }
 
 html {
-  background: #020617;
+  background: #0b0d0e;
 }
 
 * {
@@ -22,9 +59,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background:
-    radial-gradient(circle at top, rgba(34, 211, 238, 0.12), transparent 30%),
-    linear-gradient(180deg, #020617 0%, #0f172a 100%);
+  background: #0b0d0e;
 }
 
 #root {
@@ -41,16 +76,27 @@ input {
   font: inherit;
 }
 
+input::placeholder,
+textarea::placeholder {
+  color: #737b78;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #b5f36d;
+  outline-offset: 2px;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #020617;
+  background: #0b0d0e;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.4);
+  background: #343a3a;
   border-radius: 9999px;
 }
