@@ -6,7 +6,18 @@ from app.router.plan import router as plan_router
 from app.router.subscriptions import router as subscription_router
 from app.router.usage import router as usage_router
 from app.router.invoices import router as invoice_router
+from fastapi.middleware.cors import CORSMiddleware
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 app.include_router(invoice_router)
 app.include_router(usage_router)
 app.include_router(subscription_router)
